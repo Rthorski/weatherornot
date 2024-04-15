@@ -1,0 +1,11 @@
+pandas
+google-cloud-storage
+python-dotenv
+apache-airflow
+psycopg[binary]
+psycopg[pool]
+openmeteo_requests
+requests_cache
+retry_requests
+numpy
+google-cloud-storage
