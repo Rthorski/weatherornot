@@ -122,7 +122,7 @@ def load_to_forecasts_table(df):
     name="forecasts",
     schema="dev",
     con=engine,
-    if_exists='replace',
+    if_exists='append',
     index=False,
     method=psql_insert_copy
   )
