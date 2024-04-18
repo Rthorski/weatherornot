@@ -1,4 +1,4 @@
-from weather_or_not.weather_ot_not_services import get_data_from_geo_table, transform_lat_long, get_data_from_api, upload_on_gcp_bucket, download_from_gcp_bucket, load_to_forecasts_table
+from weather_or_not.weather_ot_not_services import get_data_from_geo_table, transform_lat_long, get_data_from_api, upload_on_gcp_bucket, download_from_gcp_bucket, load_to_forecasts_table, drop_staging_schema_database
 
 def get_all_informations_meteo(**kwargs):
   
@@ -24,6 +24,8 @@ def download_from_gcp(**kwargs):
   df_from_download = download_from_gcp_bucket(filename)
   ti.xcom_push(key='df_from_download', value=df_from_download)
 
+def drop_staging_schema():
+  drop_staging_schema_database()
 
 def load_to_database(**kwargs):
   

@@ -8,6 +8,7 @@ import requests
 import json
 import time
 import re
+import uuid
 
 
 def get_data_from_geo_table():
@@ -16,7 +17,7 @@ def get_data_from_geo_table():
     "Paris",
     "Lyon",
     "Marseille",
-    "Villeurbanne",
+    "Bastia",
     "Orléans",
     "Calvi",
     "Brest",
@@ -111,6 +112,7 @@ def get_data_from_api(lat_lon_object):
     df_rename = rename_columns(df_data_meteo_forecast, request_fields)
     df_with_date = get_more_informations_from_date(df_rename)
     df_with_all_forecasts_data = pd.concat([df_with_all_forecasts_data, df_with_date], ignore_index=True)
+    df_with_all_forecasts_data['id'] = df_with_all_forecasts_data.index
 
   return df_with_all_forecasts_data
 
@@ -122,13 +124,13 @@ def load_to_forecasts_table(df):
     name="forecasts",
     schema="dev",
     con=engine,
-    if_exists='append',
+    if_exists='replace',
     index=False,
     method=psql_insert_copy
   )
-  end_time = time.time() # get end time after insert
-  total_time = end_time - start_time # calculate the time
-  print(f"Insert time: {total_time} seconds") # print time
+  end_time = time.time()
+  total_time = end_time - start_time
+  print(f"Insert time: {total_time} seconds")
   
   return df
 
@@ -176,3 +178,9 @@ def download_from_gcp_bucket(filename):
   df = pd.read_csv(byte_stream, sep=";")
   
   return df
+
+def drop_staging_schema_database():
+  
+  with psycopg.connect(conn_psycopg) as conn:
+    with conn.cursor() as cur:
+      cur.execute('DROP SCHEMA if exists staging CASCADE;')
