@@ -1,0 +1,13 @@
+version: 2
+
+sources:
+  - name: dev
+    database: weatherornot_db
+    schema: dev
+    tables:
+      - name: forecasts
+        columns:
+          - name: lat
+            tests:
+              - not_null
+      - name: geolocalisation

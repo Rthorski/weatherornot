@@ -1,0 +1,49 @@
+models:
+  - name: dim_temps
+    config:
+      indexes:
+        - columns: [jour_heure_prevision]
+          type: btree
+      contract:
+        enforced: true
+    columns:
+      - name: jour_heure_prevision
+        data_type: varchar(255)
+        constraints:
+          - type: not_null
+          - type: primary_key
+      - name: heure
+        data_type: int
+      - name: jour
+        data_type: int
+      - name: date
+        data_type: date
+      - name: mois
+        data_type: int
+
+models:
+  - name: dim_lieu
+    config:
+    #   indexes:
+    #     - columns: [lieu_id]
+    #       type: btree
+      contract:
+        enforced: true
+    columns:
+      - name: id
+        data_type: int
+        constraints:
+          - type: not_null
+          - type: primary_key
+      - name: nom_lieu
+        data_type: varchar(255)
+      - name: latitude
+        data_type: numeric
+      - name: longitude
+        data_type: numeric
+      - name: departement
+        data_type: varchar(255)
+      - name: region
+        data_type: varchar(255)
+      - name: code_postal
+        data_type: varchar(5)
