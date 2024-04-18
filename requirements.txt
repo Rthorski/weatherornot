@@ -9,3 +9,5 @@ requests_cache
 retry_requests
 numpy
 google-cloud-storage
+dbt-core
+dbt-postgres  
