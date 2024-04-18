@@ -36,6 +36,7 @@ def splitGeoColumns(df):
   df['latitude'] = pd.to_numeric(df['latitude'], downcast='float')
   df['longitude'] = pd.to_numeric(df['longitude'], downcast='float')
   df.drop(columns=['geo_point_2d'], inplace=True)
+  df['lieu_id'] = df.index
   
   return df
 
@@ -56,7 +57,7 @@ def getValuesFromDict(object_json):
 
 def loadGeoInDataBase(dict_values):
   
-  columns = "dep_name, reg_name, com_code, com_name, com_name_upper, com_name_lower, latitude, longitude"
+  columns = "dep_name, reg_name, com_code, com_name, com_name_upper, com_name_lower, latitude, longitude, lieu_id"
   
   try:
     
@@ -81,7 +82,8 @@ def loadGeoInDataBase(dict_values):
             com_name_upper VARCHAR(255),
             com_name_lower VARCHAR(255),
             latitude FLOAT,
-            longitude FLOAT
+            longitude FLOAT,
+            lieu_id INTEGER
           )
           """
           cur.execute(query)
